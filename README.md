@@ -203,7 +203,7 @@ Generated reports are HTML emails optimized for Outlook's Word-based rendering e
 
 | Section | Description |
 |---------|-------------|
-| **Header** | "QA OPERATIONS REPORT" title with Check Point logo |
+| **Header** | "QA OPERATIONS REPORT" title with the company logo |
 | **Status Bar** | Color-coded banner (green/red/grey) with verdict, branch, take, and date |
 | **Section Grid** | Pass/Fail/N/A icons for each of the 4 test sections |
 | **Metrics** | QA Shift-Left %, R&D Automation %, Performance |
