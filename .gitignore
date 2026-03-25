@@ -1,0 +1,52 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual environments
+venv/
+env/
+.venv/
+.env/
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+*.egg
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.settings/
+
+# OS files
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# PyInstaller
+*.spec
+
+# Byte-compiled / optimized
+*.pyo
+*.pyd
+
+# Generated previews
+data/preview_*.html
+
+# Logo working files
+data/*.svg
+data/*.png
+data/logo_data_uri.txt
+
+# Temporary / runtime files
+*.tmp
+*.bak
+*.log
+*.eml
