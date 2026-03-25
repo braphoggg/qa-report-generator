@@ -13,8 +13,8 @@ A Python desktop application for generating, previewing, and sending QA Operatio
 - **Performance metrics** — Track QA Shift-Left %, R&D Automation %, and Performance status
 - **Take history timeline** — Visual dot timeline of previous take verdicts
 - **Outlook integration** — Preview in browser, open as Outlook draft, or send directly
-- **Auto-generated subject lines** — Format: `QA Operations Report _ R82.20 {branch} T{take} - {verdict}`
-- **Network path linking** — Auto-generates take location paths (`\\galaxy\ckp\image\CPsuite-{branch}\take_{take}`)
+- **Auto-generated subject lines** — Format: `QA Operations Report _ {version} {branch} T{take} - {verdict}`
+- **Network path linking** — Auto-generates take location paths
 - **Dark-themed UI** — Modern interface with intuitive controls
 - **History persistence** — Stores take verdicts in JSON for timeline tracking across sessions
 - **Report deduplication** — Re-generating a report for an existing take overrides the previous entry
