@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body style="margin:0; padding:0; background-color:#1a1a2e; font-family:Arial,Helvetica,sans-serif;">
+
+<!-- Main container -->
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#1a1a2e;">
+<tr><td align="center" style="padding:20px 10px;">
+
+<!-- Report card -->
+<table width="700" cellpadding="0" cellspacing="0" border="0" style="background-color:#16213e; border-radius:8px; overflow:hidden;">
+
+<!-- Title bar -->
+<tr>
+<td style="padding:12px 20px; border-bottom:1px solid #2a2a4a;">
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr>
+    <td>
+      <span style="color:#00bcd4; font-size:16px; font-weight:bold; letter-spacing:1px;">QA OPERATIONS REPORT</span>
+    </td>
+    <td align="right">
+      <img src="{{ icons.logo }}" width="45" height="45" alt="Logo" style="vertical-align:middle;">
+    </td>
+  </tr>
+  </table>
+</td>
+</tr>
+
+<!-- Status header bar -->
+<tr>
+<td style="padding:0;">
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:{{ header_color }};">
+  <tr>
+    <td width="30%" style="padding:0;">
+      <table cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <td style="padding:15px 0 15px 10px;">
+          <img src="{% if overall_status == 'pass' %}{{ icons.white_check }}{% elif overall_status == 'fail' %}{{ icons.white_x }}{% else %}{{ icons.grey_na }}{% endif %}" width="40" height="40" alt="" style="display:block;">
+        </td>
+        <td style="padding:15px 10px; white-space:nowrap;">
+          <span style="color:white; font-size:14px; font-weight:bold;">{{ status_text }}</span>
+        </td>
+      </tr>
+      </table>
+    </td>
+    <td width="40%" align="center" style="padding:15px 5px;">
+      <div style="color:white; font-size:16px; font-weight:bold;">{{ report.branch }}</div>
+      <div style="color:rgba(255,255,255,0.85); font-size:13px;">Take {{ report.take }}</div>
+    </td>
+    <td width="30%" align="right" style="padding:15px 20px;">
+      <span style="color:white; font-size:13px;">{{ formatted_date }}</span>
+    </td>
+  </tr>
+  </table>
+</td>
+</tr>
+
+<!-- Sections status -->
+<tr>
+<td style="padding:25px 20px 15px 20px;">
+  <table cellpadding="0" cellspacing="0" border="0" style="margin:0 auto;">
+  {% for section_name, section_status in sections.items() %}
+  <tr>
+    <td width="40" align="center" style="padding:8px 12px 8px 0;">
+      {% if section_status.value == 'pass' %}
+      <img src="{{ icons.green_check }}" width="28" height="28" alt="Pass">
+      {% elif section_status.value == 'fail' %}
+      <img src="{{ icons.red_x }}" width="28" height="28" alt="Fail">
+      {% else %}
+      <img src="{{ icons.na_badge }}" width="28" height="28" alt="N/A">
+      {% endif %}
+    </td>
+    <td style="padding:8px 0;">
+      <span style="color:#e0e0e0; font-size:15px; font-weight:bold;">{{ section_name }}</span>
+    </td>
+  </tr>
+  {% endfor %}
+  </table>
+</td>
+</tr>
+
+{% if overall_status == 'na' %}
+<!-- Pending analysis message -->
+<tr>
+<td align="center" style="padding:20px;">
+  <p style="color:#e0e0e0; font-size:14px; font-weight:bold; margin:0;">Pending analysis completion.</p>
+  <p style="color:#b0b0b0; font-size:13px; margin:5px 0 0 0;">The report will be sent once completed.</p>
+</td>
+</tr>
+{% else %}
+<!-- Stats summary -->
+<tr>
+<td align="center" style="padding:15px 20px;">
+  <table cellpadding="0" cellspacing="0" border="0">
+  <tr><td align="center" style="padding:3px 0;">
+    <span style="color:#ffab00; font-size:13px; font-weight:bold;">*QA Shift-Left ({{ qa_shift_left_pct }}% pass)</span>
+  </td></tr>
+  <tr><td align="center" style="padding:3px 0;">
+    <span style="color:#ffab00; font-size:13px; font-weight:bold;">*R&D Automation ({{ rda_pct }}% pass)</span>
+  </td></tr>
+  <tr><td align="center" style="padding:3px 0;">
+    <span style="color:#ffab00; font-size:13px; font-weight:bold;">*Performance – {{ performance }}</span>
+  </td></tr>
+  </table>
+</td>
+</tr>
+{% endif %}
+
+{% if pmtr_tickets %}
+<!-- Bugs section -->
+<tr>
+<td align="center" style="padding:15px 0 5px 0;">
+  <img src="{{ icons.bug_icon }}" width="36" height="36" alt="Bugs">
+  <div style="color:#e0e0e0; font-size:14px; font-weight:bold; margin-top:5px;">Bugs</div>
+</td>
+</tr>
+<tr>
+<td style="padding:5px 20px 20px 20px;">
+  {% for ticket in pmtr_tickets %}
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-bottom:1px solid #2a2a4a; margin-bottom:8px;">
+  <tr>
+    <td style="padding:10px 0;">
+      <div>
+        <a href="#" style="color:#ff6d00; font-size:13px; font-weight:bold; text-decoration:none;">{{ ticket.ticket_id }}</a>
+        <span style="background-color:#37474f; color:#b0bec5; font-size:11px; padding:2px 8px; border-radius:3px; margin-left:8px;">{{ ticket.section }}</span>
+        <span style="color:#9e9e9e; font-size:12px; margin-left:12px;">
+          {% if ticket.age_days == 0 %}Opened today{% elif ticket.age_days == 1 %}Opened 1 day ago{% else %}Opened {{ ticket.age_days }} day ago{% endif %}
+        </span>
+        {% if ticket.blocking_cross_qa %}
+        <span style="color:#ef5350; font-size:12px; font-weight:bold; float:right;">Blocking Cross QA</span>
+        {% endif %}
+      </div>
+      {% if ticket.description %}
+      <div style="color:#9e9e9e; font-size:12px; margin-top:4px;">
+        Operations | {{ report.branch }} T{{ report.take }}{% if ticket.description %} | {{ ticket.description }}{% endif %}
+      </div>
+      {% endif %}
+    </td>
+  </tr>
+  </table>
+  {% endfor %}
+</td>
+</tr>
+{% endif %}
+
+<!-- Take Status Timeline -->
+<tr>
+<td align="center" style="padding:15px 0 5px 0;">
+  <img src="{{ icons.timeline_icon }}" width="36" height="36" alt="Timeline">
+  <div style="margin-top:5px;">
+    <a href="#" style="color:#00bcd4; font-size:13px; font-weight:bold; text-decoration:none;">Take Status Timeline</a>
+  </div>
+</td>
+</tr>
+
+<tr>
+<td style="padding:10px 30px 10px 30px;">
+  <table cellpadding="0" cellspacing="0" border="0" style="margin:0 auto;">
+  <tr>
+    <!-- Legend -->
+    <td style="padding-right:15px; vertical-align:middle;">
+      <table cellpadding="0" cellspacing="0" border="0">
+      <tr><td><img src="{{ icons.dot_green }}" width="10" height="10"> <span style="color:#b0b0b0; font-size:11px;">Pass</span></td></tr>
+      <tr><td><img src="{{ icons.dot_red }}" width="10" height="10"> <span style="color:#b0b0b0; font-size:11px;">Fail</span></td></tr>
+      <tr><td><img src="{{ icons.dot_grey }}" width="10" height="10"> <span style="color:#b0b0b0; font-size:11px;">DOA</span></td></tr>
+      </table>
+    </td>
+    <!-- Timeline dots -->
+    <td style="vertical-align:middle;">
+      {% if take_history %}
+      {% for entry in take_history %}
+      {% if entry.branch == report.branch and entry.take == report.take %}
+      {% elif entry.verdict == 'pass' %}
+      <img src="{{ icons.dot_green }}" width="12" height="12" alt="Pass" style="margin:0 1px; vertical-align:middle;">
+      {% elif entry.verdict == 'fail' %}
+      <img src="{{ icons.dot_red }}" width="12" height="12" alt="Fail" style="margin:0 1px; vertical-align:middle;">
+      {% else %}
+      <img src="{{ icons.dot_grey }}" width="12" height="12" alt="DOA" style="margin:0 1px; vertical-align:middle;">
+      {% endif %}
+      {% endfor %}
+      {% else %}
+      {% for _ in range(20) %}
+      <img src="{{ icons.dot_grey }}" width="12" height="12" alt="DOA" style="margin:0 1px; vertical-align:middle;">
+      {% endfor %}
+      {% endif %}
+      {# Current report's verdict as the last dot #}
+      {% if overall_status == 'pass' %}
+      <img src="{{ icons.dot_green }}" width="12" height="12" alt="Pass" style="margin:0 1px; vertical-align:middle;">
+      {% elif overall_status == 'fail' %}
+      <img src="{{ icons.dot_red }}" width="12" height="12" alt="Fail" style="margin:0 1px; vertical-align:middle;">
+      {% else %}
+      <img src="{{ icons.dot_grey }}" width="12" height="12" alt="DOA" style="margin:0 1px; vertical-align:middle;">
+      {% endif %}
+    </td>
+  </tr>
+  </table>
+</td>
+</tr>
+
+<!-- Footer links -->
+<tr>
+<td align="center" style="padding:15px 20px 25px 20px;">
+  <span>
+    <a href="https://jira-prd.checkpoint.com/secure/Dashboard.jspa?selectPageId=43509" style="color:#00bcd4; font-size:13px; text-decoration:underline;">R82.20 Dashboard</a>
+    <span style="color:#666; font-size:13px;"> | </span>
+    <a href="file:///{{ take_location_path }}" style="color:#00bcd4; font-size:13px; text-decoration:underline;">Take Location</a>
+  </span>
+</td>
+</tr>
+
+</table>
+<!-- /Report card -->
+
+</td></tr>
+</table>
+<!-- /Main container -->
+
+</body>
+</html>

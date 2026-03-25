@@ -1,0 +1,38 @@
+[
+  {
+    "branch": "joy_main",
+    "take": 201,
+    "verdict": "fail",
+    "date": "2026-03-25"
+  },
+  {
+    "branch": "joy_main",
+    "take": 202,
+    "verdict": "pass",
+    "date": "2026-03-25"
+  },
+  {
+    "branch": "joy_main",
+    "take": 203,
+    "verdict": "pass",
+    "date": "2026-03-25"
+  },
+  {
+    "branch": "joy_main",
+    "take": 205,
+    "verdict": "pass",
+    "date": "2026-03-25"
+  },
+  {
+    "branch": "joy_main",
+    "take": 205,
+    "verdict": "pass",
+    "date": "2026-03-25"
+  },
+  {
+    "branch": "joy_main",
+    "take": 205,
+    "verdict": "pass",
+    "date": "2026-03-25"
+  }
+]
